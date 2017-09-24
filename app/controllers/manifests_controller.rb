@@ -4,7 +4,7 @@ class ManifestsController < ApplicationController
   respond_to :sh, only: :show
 
   expose :manifests, ->{ Manifest.all }
-  expose :manifest, find_by: :uuid, id: ->{ params[:uuid] }
+  expose! :manifest, find_by: :uuid, id: ->{ params[:uuid] }
 
   def create
     manifest.save
