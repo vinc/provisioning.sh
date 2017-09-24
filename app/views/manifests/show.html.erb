@@ -2,7 +2,7 @@
 
 <p>Quick provisioning:</p>
 
-<pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ curl "<%= root_url(uuid: manifest.uuid, protocol: :https).sub("/?uuid", "?uuid") %>" | sh</code></pre>
+<pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ curl "<%= root_url(uuid: manifest.uuid, protocol: :https).sub("/?uuid", "?uuid") %>" | bash</code></pre>
 
 <p>Alternatively you can manually install the <a href="https://rubygems.org/gems/provisioning" class="bg-light p-1 rounded"><code>provisioning</code></a> gem, download the manifest file, and edit it before provisioning:</p>
 
