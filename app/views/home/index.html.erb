@@ -1,131 +1,156 @@
-<h1 class="display-3 mb-5 text-center">Provisioning.sh</h1>
+<h1 class="display-3 my-5 text-center">Provisioning.sh</h1>
 
-<form id="provisioning">
-  <fieldset>
-    <legend>General settings</legend>
-    <div class="form-group">
-      <label for="domain">Wildcard domain</label>
-      <input type="text" class="form-control" id="domain" aria-describedby="domain-help" placeholder="example.com" v-model="domain">
-      <p id="domain-help" class="form-text text-muted">https://{{helps.app}}.<strong>{{helps.domain}}</strong></p>
+<form id="provisioning" v-on:submit.prevent>
+  <div class="card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs" role="tablist">
+        <li class="nav-item">
+        </li>
+        <li class="nav-item">
+          <a id="app-tab" class="nav-link active" href="#app" data-toggle="tab" role="tab">App</a>
+        </li>
+        <li class="nav-item">
+          <a id="platform-tab" class="nav-link" href="#platform" data-toggle="tab" role="tab">Platform</a>
+        </li>
+        <li class="nav-item">
+          <a id="hosting-tab" class="nav-link" href="#hosting" data-toggle="tab" role="tab">Hosting</a>
+        </li>
+        <li class="nav-item">
+          <a id="dns-tab" class="nav-link" href="#dns" data-toggle="tab" role="tab">DNS</a>
+        </li>
+      </ul>
     </div>
 
-    <div class="form-group">
-      <label for="ssh-key-fingerprint">SSH key fingerprint</label>
-      <input type="text" class="form-control" id="ssh-key-fingerprint" placeholder="01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF">
+    <div class="card-body tab-content">
+      <div class="tab-pane fade show active" id="app" role="tabpanel" aria-labelledby="app-tab">
+        <h4 class="card-title">App settings</h4>
+
+        <div class="form-group">
+          <label for="app-name">Name</label>
+          <input type="text" class="form-control" id="app-name" aria-describedby="app-name-help" placeholder="app" v-model="app">
+          <p id="app-name-help" class="form-text text-muted">https://<strong>{{helps.app}}</strong>.{{helps.domain}}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="app-domains">Custom domains</label>
+          <input type="text" class="form-control" id="app-domains" placeholder="app.com, www.app.com">
+        </div>
+
+        <div class="form-group">
+          <label for="app-services">Services</label>
+          <select class="form-control" id="app-services" multiple>
+            <option>Mongo</option>
+            <option>Postgres</option>
+            <option>Redis</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="platform" role="tabpanel" aria-labelledby="platform-tab">
+        <h4 class="card-title">Platform settings</h4>
+
+        <div class="form-group">
+          <label for="platform">Platform</label>
+          <select class="form-control" id="platform" v-model="providers.platform">
+            <option value="dokku">Dokku</option>
+            <option value="flynn">Flynn</option>
+          </select>
+        </div>
+
+        <div v-if="providers.platform === 'dokku'">
+          <div class="form-group">
+            <label for="dokku-version">Version</label>
+            <select class="form-control" id="dokku-version">
+              <option>v0.10.4</option>
+              <option>v0.9.4</option>
+              <option>v0.8.2</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ssh-key-fingerprint">SSH key fingerprint</label>
+          <input type="text" class="form-control" id="ssh-key-fingerprint" placeholder="01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF">
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="hosting" role="tabpanel" aria-labelledby="hosting-tab">
+        <h4 class="card-title">Hosting settings</h4>
+
+        <div class="form-group">
+          <label for="hosting">Hosting</label>
+          <select class="form-control" id="hosting" v-model="providers.hosting">
+            <option value="digitalocean">DigitalOcean</option>
+            <option value="linode">Linode</option>
+            <option value="rackspace">Rackspace</option>
+          </select>
+        </div>
+
+        <div v-if="providers.hosting === 'digitalocean'">
+          <div class="form-group">
+            <label for="digitalocean-api-token">API token</label>
+            <input type="text" class="form-control" id="digitalocean-api-token" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef">
+          </div>
+
+          <div class="form-group">
+            <label for="digitalocean-server-image">Server image</label>
+            <select class="form-control" id="digitalocean-server-image">
+              <option>Ubuntu 16.04.3 x64</option>
+              <option>Ubuntu 16.04.3 x32</option>
+              <option>Ubuntu 14.04.5 x64</option>
+              <option>Ubuntu 14.04.5 x32</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="digitalocean-server-size">Server size</label>
+            <select class="form-control" id="digitalocean-server-size">
+              <option>1 CPU / 512 MB</option>
+              <option>1 CPU / 1 GB</option>
+              <option>2 CPU / 2 GB</option>
+              <option>2 CPU / 4 GB</option>
+              <option>4 CPU / 8 GB</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="digitalocean-server-region">Server region</label>
+            <select class="form-control" id="digitalocean-server-region">
+              <option>Amsterdam 2</option>
+              <option>Amsterdam 3</option>
+              <option>Frankfurt 1</option>
+              <option>London 1</option>
+              <option>New York 1</option>
+              <option>New York 3</option>
+              <option>San Francisco 1</option>
+              <option>San Francisco 2</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="dns" role="tabpanel" aria-labelledby="dns-tab">
+        <h4 class="card-title">DNS settings</h4>
+
+        <div class="form-group">
+          <label for="dns">DNS</label>
+          <select class="form-control" id="dns" v-model="providers.dns">
+            <option value="digitalocean">DigitalOcean</option>
+            <option value="linode">Linode</option>
+            <option value="rackspace">Rackspace</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="domain">Wildcard domain</label>
+          <input type="text" class="form-control" id="domain" aria-describedby="domain-help" placeholder="example.com" v-model="domain">
+          <p id="domain-help" class="form-text text-muted">https://{{helps.app}}.<strong>{{helps.domain}}</strong></p>
+        </div>
+      </div>
     </div>
-  </fieldset>
+  </div>
 
-  <fieldset>
-    <legend>App settings</legend>
-
-    <div class="form-group">
-      <label for="app-name">Name</label>
-      <input type="text" class="form-control" id="app-name" aria-describedby="app-name-help" placeholder="app" v-model="app">
-      <p id="app-name-help" class="form-text text-muted">https://<strong>{{helps.app}}</strong>.{{helps.domain}}</p>
-    </div>
-
-    <div class="form-group">
-      <label for="app-domains">Custom domains</label>
-      <input type="text" class="form-control" id="app-domains" placeholder="app.com, www.app.com">
-    </div>
-
-    <div class="form-group">
-      <label for="app-services">Services</label>
-      <select class="form-control" id="app-services" multiple>
-        <option>Mongo</option>
-        <option>Postgres</option>
-        <option>Redis</option>
-      </select>
-    </div>
-  </fieldset>
-
-
-  <fieldset>
-    <legend>Providers settings</legend>
-
-    <div class="form-group">
-      <label for="dns">DNS</label>
-      <select class="form-control" id="dns" v-model="providers.dns">
-        <option value="digitalocean">DigitalOcean</option>
-        <option value="linode">Linode</option>
-        <option value="rackspace">Rackspace</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="hosting">Hosting</label>
-      <select class="form-control" id="hosting" v-model="providers.hosting">
-        <option value="digitalocean">DigitalOcean</option>
-        <option value="linode">Linode</option>
-        <option value="rackspace">Rackspace</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="platform">Platform</label>
-      <select class="form-control" id="platform" v-model="providers.platform">
-        <option value="dokku">Dokku</option>
-        <option value="flynn">Flynn</option>
-      </select>
-    </div>
-  </fieldset>
-
-  <fieldset v-if="providers.hosting === 'digitalocean'">
-    <legend>DigitalOcean settings</legend>
-
-    <div class="form-group">
-      <label for="digitalocean-api-token">API token</label>
-      <input type="text" class="form-control" id="digitalocean-api-token" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef">
-    </div>
-
-    <div class="form-group">
-      <label for="digitalocean-server-image">Server image</label>
-      <select class="form-control" id="digitalocean-server-image">
-        <option>Ubuntu 16.04.3 x64</option>
-        <option>Ubuntu 16.04.3 x32</option>
-        <option>Ubuntu 14.04.5 x64</option>
-        <option>Ubuntu 14.04.5 x32</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="digitalocean-server-size">Server size</label>
-      <select class="form-control" id="digitalocean-server-size">
-        <option>1 CPU / 512 MB</option>
-        <option>1 CPU / 1 GB</option>
-        <option>2 CPU / 2 GB</option>
-        <option>2 CPU / 4 GB</option>
-        <option>4 CPU / 8 GB</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="digitalocean-server-region">Server region</label>
-      <select class="form-control" id="digitalocean-server-region">
-        <option>Amsterdam 2</option>
-        <option>Amsterdam 3</option>
-        <option>Frankfurt 1</option>
-        <option>London 1</option>
-        <option>New York 1</option>
-        <option>New York 3</option>
-        <option>San Francisco 1</option>
-        <option>San Francisco 2</option>
-      </select>
-    </div>
-  </fieldset>
-
-  <fieldset v-if="providers.platform === 'dokku'">
-    <legend>Dokku settings</legend>
-
-    <div class="form-group">
-      <label for="dokku-version">Version</label>
-      <select class="form-control" id="dokku-version">
-        <option>v0.10.4</option>
-        <option>v0.9.4</option>
-        <option>v0.8.2</option>
-      </select>
-    </div>
-  </fieldset>
-
-  <fieldset class="text-center mb-3">
+  <div class="text-center my-4">
     <button type="submit" class="btn btn-primary">Generate</button>
-  </fieldset>
+  </div>
 </form>
