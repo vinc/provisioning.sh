@@ -2,7 +2,20 @@
 
 set -eo pipefail
 
-#gem install provisioning
-curl -o manifest.json -s "<%= manifest_url(protocol: :https, format: :json) %>"
-#provision manifest.json
-cat manifest.json
+temp=$(mktemp /tmp/provisioning-manifest-<%= manifest.uuid %>.XXXXXXXX)
+
+rmtemp() {
+  rm "$temp"
+}
+
+main() {
+  gem install provisioning
+
+  curl -s "<%= manifest_url(protocol: :https, format: :json) %>" > "$temp"
+
+  provision "$temp"
+}
+
+trap rmtemp EXIT
+
+main
