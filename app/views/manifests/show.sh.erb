@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -eo pipefail
+
+#gem install provisioning
+curl -o manifest.json -s "<%= manifest_url(protocol: :https, format: :json) %>"
+#provision manifest.json
+cat manifest.json

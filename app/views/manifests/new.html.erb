@@ -1,6 +1,6 @@
 <h1 class="display-3 my-5 text-center">Provisioning.sh</h1>
 
-<form id="provisioning" v-on:submit.prevent>
+<%= form_with model: manifest, id: "provisioning" do |form| %>
   <div class="card">
     <div class="card-header">
       <ul id="provisioning-tabs" class="nav nav-tabs card-header-tabs" role="tablist">
@@ -154,9 +154,9 @@
       <div class="tab-pane fade" id="save" role="tabpanel" aria-labelledby="save-tab">
         <h4 class="card-title">Save settings</h4>
 
-        <div class="lead text-secondary bg-light p-3 my-4 border rounded">
-          <samp>$ curl "https://provisioning.sh?uuid=<%= SecureRandom.uuid %>" | sh</samp>
-        </div>
+        <p>This action will generate a link to a provisioning script that you can download and execute:</p>
+
+        <pre class="text-secondary bg-light p-3 mt-3 mb-4 border rounded"><code>$ curl "https://provisioning.sh?uuid=[random unique identifier]" | sh</code></pre>
 
         <div class="text-center">
           <button type="submit" class="btn btn-lg btn-primary">Save</button>
@@ -164,4 +164,4 @@
       </div>
     </div>
   </div>
-</form>
+<% end %>
