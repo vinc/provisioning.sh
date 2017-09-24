@@ -16,3 +16,11 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+
+$(document).on('turbolinks:load', function() {
+  $('#provisioning-tabs a[href="' + window.location.hash + '"]').tab('show');
+
+  $('#provisioning a').click(function() {
+    window.location.hash = $(this).attr('href');
+  });
+});
