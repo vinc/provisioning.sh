@@ -1,12 +1,12 @@
 <h1 class="display-3 mb-5 text-center">Provisioning.sh</h1>
 
-<form>
+<form id="provisioning">
   <fieldset>
     <legend>General settings</legend>
     <div class="form-group">
       <label for="domain">Wildcard domain</label>
-      <input type="text" class="form-control" id="domain" aria-describedby="domain-help" placeholder="example.com">
-      <p id="domain-help" class="form-text text-muted">https://app.<strong>example.com</strong></p>
+      <input type="text" class="form-control" id="domain" aria-describedby="domain-help" placeholder="example.com" v-model="domain">
+      <p id="domain-help" class="form-text text-muted">https://{{helps.app}}.<strong>{{helps.domain}}</strong></p>
     </div>
 
     <div class="form-group">
@@ -15,15 +15,13 @@
     </div>
   </fieldset>
 
-  <hr class="pb-2">
-
   <fieldset>
     <legend>App settings</legend>
 
     <div class="form-group">
       <label for="app-name">Name</label>
-      <input type="text" class="form-control" id="app-name" aria-describedby="app-name-help" placeholder="app">
-      <p id="app-name-help" class="form-text text-muted">https://<strong>app</strong>.example.com</p>
+      <input type="text" class="form-control" id="app-name" aria-describedby="app-name-help" placeholder="app" v-model="app">
+      <p id="app-name-help" class="form-text text-muted">https://<strong>{{helps.app}}</strong>.{{helps.domain}}</p>
     </div>
 
     <div class="form-group">
@@ -41,39 +39,36 @@
     </div>
   </fieldset>
 
-  <hr class="pb-2">
 
   <fieldset>
     <legend>Providers settings</legend>
 
     <div class="form-group">
       <label for="dns">DNS</label>
-      <select class="form-control" id="dns">
-        <option>DigitalOcean</option>
-        <option>Linode</option>
-        <option>Rackspace</option>
+      <select class="form-control" id="dns" v-model="providers.dns">
+        <option value="digitalocean">DigitalOcean</option>
+        <option value="linode">Linode</option>
+        <option value="rackspace">Rackspace</option>
       </select>
     </div>
     <div class="form-group">
       <label for="hosting">Hosting</label>
-      <select class="form-control" id="hosting">
-        <option>DigitalOcean</option>
-        <option>Linode</option>
-        <option>Rackspace</option>
+      <select class="form-control" id="hosting" v-model="providers.hosting">
+        <option value="digitalocean">DigitalOcean</option>
+        <option value="linode">Linode</option>
+        <option value="rackspace">Rackspace</option>
       </select>
     </div>
     <div class="form-group">
       <label for="platform">Platform</label>
-      <select class="form-control" id="platform">
-        <option>Dokku</option>
-        <option>Flynn</option>
+      <select class="form-control" id="platform" v-model="providers.platform">
+        <option value="dokku">Dokku</option>
+        <option value="flynn">Flynn</option>
       </select>
     </div>
   </fieldset>
 
-  <hr class="pb-2">
-
-  <fieldset>
+  <fieldset v-if="providers.hosting === 'digitalocean'">
     <legend>DigitalOcean settings</legend>
 
     <div class="form-group">
@@ -115,16 +110,9 @@
         <option>San Francisco 2</option>
       </select>
     </div>
-
-    <div class="form-group">
-      <label for="digitalocean-cluster-size">Cluster size</label>
-      <input type="text" class="form-control" id="digitalocean-cluster-size" placeholder="1" disabled>
-    </div>
   </fieldset>
 
-  <hr class="pb-2">
-
-  <fieldset>
+  <fieldset v-if="providers.platform === 'dokku'">
     <legend>Dokku settings</legend>
 
     <div class="form-group">
@@ -136,8 +124,6 @@
       </select>
     </div>
   </fieldset>
-
-  <hr class="pb-3">
 
   <fieldset class="text-center mb-3">
     <button type="submit" class="btn btn-primary">Generate</button>
