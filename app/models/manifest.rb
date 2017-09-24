@@ -6,7 +6,10 @@ class Manifest < ApplicationRecord
   before_save do
     self.uuid ||= SecureRandom.uuid
 
-    app[:domains] = app[:domains].split(/[, ]+/) if app[:domains].is_a?(String)
+    if app.is_a?(Hash) && app[:domains].is_a?(String)
+      app[:domains] = app[:domains].split(/[, ]+/)
+    end
+
     FIELDS.each { |field| content[field] = send(field) }
   end
 
