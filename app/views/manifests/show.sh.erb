@@ -9,7 +9,9 @@ rmtemp() {
 }
 
 main() {
-  gem install provisioning
+  if ! hash provision 2> /dev/null; then
+    gem install provisioning
+  fi
 
   curl -s "<%= manifest_url(protocol: :https, format: :json) %>" > "$temp"
 
