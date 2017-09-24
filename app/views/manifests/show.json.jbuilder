@@ -1,1 +1,1 @@
-json.uuid manifest.uuid
+json.manifest manifest.content

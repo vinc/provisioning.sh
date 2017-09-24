@@ -30,21 +30,21 @@
 
         <div class="form-group">
           <label for="app-name">Name</label>
-          <input type="text" class="form-control" id="app-name" aria-describedby="app-name-help" placeholder="app" v-model="app">
+          <input id="app-name" name="manifest[app][name]" type="text" class="form-control" aria-describedby="app-name-help" placeholder="app" v-model="app">
           <p id="app-name-help" class="form-text text-muted">https://<strong>{{helps.app}}</strong>.{{helps.domain}}</p>
         </div>
 
         <div class="form-group">
           <label for="app-domains">Custom domains</label>
-          <input type="text" class="form-control" id="app-domains" placeholder="app.com, www.app.com">
+          <input id="app-domains" name="manifest[app][domains]" type="text" class="form-control" placeholder="app.com, www.app.com">
         </div>
 
         <div class="form-group">
           <label for="app-services">Services</label>
-          <select class="form-control" id="app-services" multiple>
-            <option>Mongo</option>
-            <option>Postgres</option>
-            <option>Redis</option>
+          <select id="app-services" name="manifest[app][services][]" class="form-control" multiple>
+            <option value="mongo">Mongo</option>
+            <option value="postgres">Postgres</option>
+            <option value="redis">Redis</option>
           </select>
         </div>
       </div>
@@ -54,7 +54,7 @@
 
         <div class="form-group">
           <label for="platform">Platform</label>
-          <select class="form-control" id="platform" v-model="providers.platform">
+          <select id="platform" name="manifest[providers][platform]" class="form-control" v-model="providers.platform">
             <option value="dokku">Dokku</option>
             <option value="flynn">Flynn</option>
           </select>
@@ -63,7 +63,7 @@
         <div v-if="providers.platform === 'dokku'">
           <div class="form-group">
             <label for="dokku-version">Version</label>
-            <select class="form-control" id="dokku-version">
+            <select id="dokku-version" name="manifest[dokku][version]" class="form-control">
               <option>v0.10.4</option>
               <option>v0.9.4</option>
               <option>v0.8.2</option>
@@ -73,7 +73,7 @@
 
         <div class="form-group">
           <label for="ssh-key-fingerprint">SSH key fingerprint</label>
-          <input type="text" class="form-control" id="ssh-key-fingerprint" placeholder="01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF">
+          <input id="ssh-key-fingerprint" name="manifest[ssh][key][fingerprint]" type="text" class="form-control" placeholder="01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF">
         </div>
       </div>
 
@@ -82,7 +82,7 @@
 
         <div class="form-group">
           <label for="hosting">Hosting</label>
-          <select class="form-control" id="hosting" v-model="providers.hosting">
+          <select id="hosting" name="manifest[providers][hosting]" class="form-control" v-model="providers.hosting">
             <option value="digitalocean">DigitalOcean</option>
             <option value="linode">Linode</option>
             <option value="rackspace">Rackspace</option>
@@ -91,42 +91,42 @@
 
         <div v-if="providers.hosting === 'digitalocean'">
           <div class="form-group">
-            <label for="digitalocean-api-token">API token</label>
-            <input type="text" class="form-control" id="digitalocean-api-token" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef">
+            <label for="digitalocean-token">API token</label>
+            <input id="digitalocean-token" name="manifest[digitalocean][token]" type="text" class="form-control" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef">
           </div>
 
           <div class="form-group">
-            <label for="digitalocean-server-image">Server image</label>
-            <select class="form-control" id="digitalocean-server-image">
-              <option>Ubuntu 16.04.3 x64</option>
-              <option>Ubuntu 16.04.3 x32</option>
-              <option>Ubuntu 14.04.5 x64</option>
-              <option>Ubuntu 14.04.5 x32</option>
+            <label for="digitalocean-droplet-image">Server image</label>
+            <select id="digitalocean-droplet-image" name="manifest[digitalocean][droplet][image]" class="form-control">
+              <option value="ubuntu-16-04-x64">Ubuntu 16.04 x64</option>
+              <option value="ubuntu-16-04-x32">Ubuntu 16.04 x32</option>
+              <option value="ubuntu-14-04-x64">Ubuntu 14.04 x64</option>
+              <option value="ubuntu-14-04-x32">Ubuntu 14.04 x32</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="digitalocean-server-size">Server size</label>
-            <select class="form-control" id="digitalocean-server-size">
-              <option>1 CPU / 512 MB</option>
-              <option>1 CPU / 1 GB</option>
-              <option>2 CPU / 2 GB</option>
-              <option>2 CPU / 4 GB</option>
-              <option>4 CPU / 8 GB</option>
+            <label for="digitalocean-droplet-size">Server size</label>
+            <select id="digitalocean-droplet-size" name="manifest[digitalocean][droplet][size]" class="form-control">
+              <option value="512mb">1 CPU / 512 MB</option>
+              <option value="1gb">1 CPU / 1 GB</option>
+              <option value="2gb">2 CPU / 2 GB</option>
+              <option value="4gb">2 CPU / 4 GB</option>
+              <option value="8gb">4 CPU / 8 GB</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="digitalocean-server-region">Server region</label>
-            <select class="form-control" id="digitalocean-server-region">
-              <option>Amsterdam 2</option>
-              <option>Amsterdam 3</option>
-              <option>Frankfurt 1</option>
-              <option>London 1</option>
-              <option>New York 1</option>
-              <option>New York 3</option>
-              <option>San Francisco 1</option>
-              <option>San Francisco 2</option>
+            <label for="digitalocean-droplet-region">Server region</label>
+            <select id="digitalocean-droplet-region" name="manifest[digitalocean][droplet][region]" class="form-control">
+              <option value="ams2">Amsterdam 2</option>
+              <option value="ams3">Amsterdam 3</option>
+              <option value="fra1">Frankfurt 1</option>
+              <option value="lon1">London 1</option>
+              <option value="nyc1">New York 1</option>
+              <option value="nyc3">New York 3</option>
+              <option value="sfo1">San Francisco 1</option>
+              <option value="sfo2">San Francisco 2</option>
             </select>
           </div>
         </div>
@@ -137,7 +137,7 @@
 
         <div class="form-group">
           <label for="dns">DNS</label>
-          <select class="form-control" id="dns" v-model="providers.dns">
+          <select id="dns" name="manifest[providers][dns]" class="form-control" v-model="providers.dns">
             <option value="digitalocean">DigitalOcean</option>
             <option value="linode">Linode</option>
             <option value="rackspace">Rackspace</option>
@@ -146,7 +146,7 @@
 
         <div class="form-group">
           <label for="domain">Wildcard domain</label>
-          <input type="text" class="form-control" id="domain" aria-describedby="domain-help" placeholder="example.com" v-model="domain">
+          <input id="domain" name="manifest[domain]" type="text" class="form-control" aria-describedby="domain-help" placeholder="example.com" v-model="domain">
           <p id="domain-help" class="form-text text-muted">https://{{helps.app}}.<strong>{{helps.domain}}</strong></p>
         </div>
       </div>
