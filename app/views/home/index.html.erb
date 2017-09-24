@@ -1,0 +1,145 @@
+<h1 class="display-3 mb-5 text-center">Provisioning.sh</h1>
+
+<form>
+  <fieldset>
+    <legend>General settings</legend>
+    <div class="form-group">
+      <label for="domain">Wildcard domain</label>
+      <input type="text" class="form-control" id="domain" aria-describedby="domain-help" placeholder="example.com">
+      <p id="domain-help" class="form-text text-muted">https://app.<strong>example.com</strong></p>
+    </div>
+
+    <div class="form-group">
+      <label for="ssh-key-fingerprint">SSH key fingerprint</label>
+      <input type="text" class="form-control" id="ssh-key-fingerprint" placeholder="01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF">
+    </div>
+  </fieldset>
+
+  <hr class="pb-2">
+
+  <fieldset>
+    <legend>App settings</legend>
+
+    <div class="form-group">
+      <label for="app-name">Name</label>
+      <input type="text" class="form-control" id="app-name" aria-describedby="app-name-help" placeholder="app">
+      <p id="app-name-help" class="form-text text-muted">https://<strong>app</strong>.example.com</p>
+    </div>
+
+    <div class="form-group">
+      <label for="app-domains">Custom domains</label>
+      <input type="text" class="form-control" id="app-domains" placeholder="app.com, www.app.com">
+    </div>
+
+    <div class="form-group">
+      <label for="app-services">Services</label>
+      <select class="form-control" id="app-services" multiple>
+        <option>Mongo</option>
+        <option>Postgres</option>
+        <option>Redis</option>
+      </select>
+    </div>
+  </fieldset>
+
+  <hr class="pb-2">
+
+  <fieldset>
+    <legend>Providers settings</legend>
+
+    <div class="form-group">
+      <label for="dns">DNS</label>
+      <select class="form-control" id="dns">
+        <option>DigitalOcean</option>
+        <option>Linode</option>
+        <option>Rackspace</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="hosting">Hosting</label>
+      <select class="form-control" id="hosting">
+        <option>DigitalOcean</option>
+        <option>Linode</option>
+        <option>Rackspace</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="platform">Platform</label>
+      <select class="form-control" id="platform">
+        <option>Dokku</option>
+        <option>Flynn</option>
+      </select>
+    </div>
+  </fieldset>
+
+  <hr class="pb-2">
+
+  <fieldset>
+    <legend>DigitalOcean settings</legend>
+
+    <div class="form-group">
+      <label for="digitalocean-api-token">API token</label>
+      <input type="text" class="form-control" id="digitalocean-api-token" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef">
+    </div>
+
+    <div class="form-group">
+      <label for="digitalocean-server-image">Server image</label>
+      <select class="form-control" id="digitalocean-server-image">
+        <option>Ubuntu 16.04.3 x64</option>
+        <option>Ubuntu 16.04.3 x32</option>
+        <option>Ubuntu 14.04.5 x64</option>
+        <option>Ubuntu 14.04.5 x32</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="digitalocean-server-size">Server size</label>
+      <select class="form-control" id="digitalocean-server-size">
+        <option>1 CPU / 512 MB</option>
+        <option>1 CPU / 1 GB</option>
+        <option>2 CPU / 2 GB</option>
+        <option>2 CPU / 4 GB</option>
+        <option>4 CPU / 8 GB</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="digitalocean-server-region">Server region</label>
+      <select class="form-control" id="digitalocean-server-region">
+        <option>Amsterdam 2</option>
+        <option>Amsterdam 3</option>
+        <option>Frankfurt 1</option>
+        <option>London 1</option>
+        <option>New York 1</option>
+        <option>New York 3</option>
+        <option>San Francisco 1</option>
+        <option>San Francisco 2</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="digitalocean-cluster-size">Cluster size</label>
+      <input type="text" class="form-control" id="digitalocean-cluster-size" placeholder="1" disabled>
+    </div>
+  </fieldset>
+
+  <hr class="pb-2">
+
+  <fieldset>
+    <legend>Dokku settings</legend>
+
+    <div class="form-group">
+      <label for="dokku-version">Version</label>
+      <select class="form-control" id="dokku-version">
+        <option>v0.10.4</option>
+        <option>v0.9.4</option>
+        <option>v0.8.2</option>
+      </select>
+    </div>
+  </fieldset>
+
+  <hr class="pb-3">
+
+  <fieldset class="text-center mb-3">
+    <button type="submit" class="btn btn-primary">Generate</button>
+  </fieldset>
+</form>
