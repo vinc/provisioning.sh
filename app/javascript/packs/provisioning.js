@@ -19,6 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
         dns: "digitalocean",
         hosting: "digitalocean",
         platform: "dokku"
+      },
+      digitalocean: {
+        token: ""
       }
     },
     watch: {

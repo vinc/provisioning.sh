@@ -4,12 +4,12 @@
 
 <p>Run provisioning script:</p>
 
-<pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ curl -Ls "<%= root_url(uuid: manifest.uuid, protocol: :https).sub("/?uuid", "?uuid") %>" | bash</code></pre>
+<pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ curl -Ls "<%= root_url(uuid: manifest.uuid).sub("/?uuid", "?uuid") %>" | bash</code></pre>
 
 <p>Alternatively you can manually install the <a href="https://rubygems.org/gems/provisioning" class="bg-light p-1 rounded"><code>provisioning</code></a> gem, download the manifest file, and edit it before provisioning:</p>
 
 <pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ gem install provisioning
-$ curl -o manifest.json "<%= manifest_url(protocol: :https, format: :json) %>"
+$ curl -o manifest.json "<%= manifest_url(format: :json) %>"
 $ vim manifest.json
 $ provision manifest.json</code></pre>
 

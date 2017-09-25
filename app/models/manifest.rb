@@ -1,5 +1,5 @@
 class Manifest < ApplicationRecord
-  FIELDS = [:domain, :ssh, :app, :providers, :dokku, :digitalocean].freeze
+  FIELDS = [:ssh, :app, :platform, :hosting, :dns, :providers].freeze
 
   attr_accessor(*FIELDS)
 

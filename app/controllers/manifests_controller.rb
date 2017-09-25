@@ -20,12 +20,12 @@ class ManifestsController < ApplicationController
 
   def manifest_params
     params.require(:manifest).permit(
-      :domain,
       ssh: { key: [:fingerprint] },
       app: [:name, :domains, services: []],
-      providers: [:platform, :hosting, :dns],
-      dokku: [:version],
-      digitalocean: [:token, droplet: [:image, :size, :region]]
+      platform: [:version],
+      hosting: [server: [:image, :size, :region]],
+      dns: [:domain],
+      providers: [digitalocean: [:token]]
     )
   end
 end

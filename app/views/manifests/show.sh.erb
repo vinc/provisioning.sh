@@ -13,7 +13,7 @@ main() {
     gem install provisioning
   fi
 
-  curl -s "<%= manifest_url(protocol: :https, format: :json) %>" > "$temp"
+  curl -s "<%= manifest_url(format: :json) %>" > "$temp"
 
   provision "$temp"
 }
