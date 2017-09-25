@@ -12,8 +12,17 @@
   </head>
 
   <body>
-    <div class="container mb-4">
-      <%= yield %>
+    <div class="container d-flex flex-column" style="min-height:100vh">
+      <div>
+        <%= yield %>
+      </div>
+
+      <footer class="mt-auto">
+        <p class="text-center text-secondary mt-5">
+          <span>Built with &hearts; by <a href="https://vinc.cc" class="text-secondary"><strong>vinc</strong></a>.</span>
+          <span>Code licensed <a href="https://github.com/vinc/provisioning.sh/blob/master/LICENSE" class="text-secondary"><strong>MIT</strong></a>.</span>
+        </p>
+      </footer>
     </div>
   </body>
 </html>
