@@ -33,7 +33,7 @@
         <div class="form-group">
           <label for="app-name">Name</label>
           <input id="app-name" name="manifest[app][name]" type="text" class="form-control" aria-describedby="app-name-help" placeholder="app" v-model="app">
-          <p id="app-name-help" class="form-text text-muted">https://<strong>{{helps.app}}</strong>.{{helps.domain}}</p>
+          <p id="app-name-help" class="form-text text-muted" v-cloak>https://<strong>{{helps.app}}</strong>.{{helps.domain}}</p>
         </div>
 
         <div class="form-group">
@@ -149,7 +149,7 @@
         <div class="form-group">
           <label for="domain">Wildcard domain</label>
           <input id="domain" name="manifest[domain]" type="text" class="form-control" aria-describedby="domain-help" placeholder="example.com" v-model="domain">
-          <p id="domain-help" class="form-text text-muted">https://{{helps.app}}.<strong>{{helps.domain}}</strong></p>
+          <p id="domain-help" class="form-text text-muted" v-cloak>https://{{helps.app}}.<strong>{{helps.domain}}</strong></p>
         </div>
       </div>
 
