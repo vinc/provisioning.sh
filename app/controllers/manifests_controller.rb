@@ -13,7 +13,7 @@ class ManifestsController < ApplicationController
 
   def destroy
     manifest.destroy
-    redirect_to root_path
+    respond_with(manifest, location: root_path)
   end
 
   private

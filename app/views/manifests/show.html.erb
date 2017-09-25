@@ -1,5 +1,7 @@
 <h1 class="display-3 my-5 text-center">Provisioning manifest</h1>
 
+<%= render "layouts/alerts" %>
+
 <p>Run provisioning script:</p>
 
 <pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ curl -Ls "<%= root_url(uuid: manifest.uuid, protocol: :https).sub("/?uuid", "?uuid") %>" | bash</code></pre>
