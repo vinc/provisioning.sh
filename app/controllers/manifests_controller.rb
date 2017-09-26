@@ -23,7 +23,10 @@ class ManifestsController < ApplicationController
       ssh: [:key],
       app: [:name, :domains, services: []],
       platform: [:provider, :version],
-      hosting: [:provider, server: [:image, :size, :region]],
+      hosting: [
+        :provider, :region,
+        server: [:image, :image_id, :flavor_id, :size, :region]
+      ],
       dns: [:provider, :domain],
       providers: [
         aws: [:aws_access_token_id, :aws_secret_access_key],

@@ -106,6 +106,13 @@
           </div>
 
           <div class="form-group">
+            <label for="aws-region">AWS region</label>
+            <select id="aws-region" name="manifest[hosting][region]" class="form-control">
+              <option value="us-west-2">Oregon</option>
+            </select>
+          </div>
+
+          <div class="form-group">
             <label for="aws-server-image">Server image</label>
             <select id="aws-server-image" name="manifest[hosting][server][image_id]" class="form-control">
               <option value="ami-6e1a0117" selected>Ubuntu 16.04 LTS</option>
@@ -124,13 +131,6 @@
               <option value="t2.2xlarge">8 CPU / 32 GB</option>
             </select>
           </div>
-
-          <div class="form-group">
-            <label for="aws-server-region">Server region</label>
-            <select id="aws-server-region" name="manifest[hosting][server][region]" class="form-control">
-              <option value="us-west-2">Oregon</option>
-            </select>
-          </div>
         </div>
 
         <div v-if="providers.hosting === 'digitalocean'">
@@ -138,6 +138,21 @@
             <label for="digitalocean-token">DigitalOcean token</label>
             <input id="digitalocean-token" name="manifest[providers][digitalocean][digitalocean_token]" type="text" class="form-control" aria-describedby="digitalocean-token-help" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" v-model="digitalocean.token">
             <p id="digitalocean-token-help" class="form-text text-muted">Leave blank if <code>DIGITALOCEAN_TOKEN</code> environment variable is set</p>
+          </div>
+
+          <div class="form-group">
+            <label for="digitalocean-server-region">Server region</label>
+            <select id="digitalocean-server-region" name="manifest[hosting][server][region]" class="form-control">
+              <option value="ams2">Amsterdam 2</option>
+              <option value="ams3">Amsterdam 3</option>
+              <option value="fra1">Frankfurt 1</option>
+              <option value="lon1">London 1</option>
+              <option value="nyc1" selected>New York 1</option>
+              <option value="nyc3">New York 3</option>
+              <option value="sfo1">San Francisco 1</option>
+              <option value="sfo2">San Francisco 2</option>
+              <option value="sgp1">Singapore 1</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -157,21 +172,6 @@
               <option value="2gb">2 CPU / 2 GB</option>
               <option value="4gb">2 CPU / 4 GB</option>
               <option value="8gb">4 CPU / 8 GB</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="digitalocean-server-region">Server region</label>
-            <select id="digitalocean-server-region" name="manifest[hosting][server][region]" class="form-control">
-              <option value="ams2">Amsterdam 2</option>
-              <option value="ams3">Amsterdam 3</option>
-              <option value="fra1">Frankfurt 1</option>
-              <option value="lon1">London 1</option>
-              <option value="nyc1" selected>New York 1</option>
-              <option value="nyc3">New York 3</option>
-              <option value="sfo1">San Francisco 1</option>
-              <option value="sfo2">San Francisco 2</option>
-              <option value="sgp1">Singapore 1</option>
             </select>
           </div>
         </div>
