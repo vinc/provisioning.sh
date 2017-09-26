@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const app = new Vue({
     el: "#provisioning",
     data: {
-      domain: null,
-      app: null,
+      domain: "",
+      app: "",
       helps: {
         domain: "example.com",
         app: "app"
