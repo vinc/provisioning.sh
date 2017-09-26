@@ -28,6 +28,7 @@ class ManifestsController < ApplicationController
         server: [:image, :image_id, :flavor_id, :size, :region]
       ],
       dns: [:provider, :domain],
+      cloud: [:provider],
       providers: [
         aws: [:aws_access_token_id, :aws_secret_access_key],
         digitalocean: [:digitalocean_token]
