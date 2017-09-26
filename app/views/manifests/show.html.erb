@@ -2,7 +2,7 @@
 
 <%= render "layouts/alerts" %>
 
-<p>Run provisioning script:</p>
+<p>Run the provisioning script:</p>
 
 <pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ curl -Ls "<%= root_url(uuid: manifest.uuid).sub("/?uuid", "?uuid") %>" | bash</code></pre>
 
@@ -12,6 +12,10 @@
 $ curl -o manifest.json "<%= manifest_url(format: :json) %>"
 $ vim manifest.json
 $ provision manifest.json</code></pre>
+
+<p>If you left out some secrets from the manifest file, set them as environment variables before running the script:</p>
+
+<pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ export DIGITALOCEAN_TOKEN="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"</code></pre>
 
 <div class="text-center">
   <%= link_to "Delete", manifest, data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-lg btn-danger", role: "button" %>
