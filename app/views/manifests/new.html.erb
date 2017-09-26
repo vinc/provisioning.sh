@@ -93,8 +93,9 @@
 
         <div v-if="providers.hosting === 'digitalocean'">
           <div class="form-group">
-            <label for="digitalocean-token">API token</label>
-            <input id="digitalocean-token" name="manifest[providers][digitalocean][token]" type="text" class="form-control" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" v-model="digitalocean.token">
+            <label for="digitalocean-token">DigitalOcean token</label>
+            <input id="digitalocean-token" name="manifest[providers][digitalocean][digitalocean_token]" type="text" class="form-control" aria-describedby="digitalocean-token-help" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" v-model="digitalocean.token">
+            <p id="digitalocean-token-help" class="form-text text-muted">Leave this field blank if <code>DIGITALOCEAN_TOKEN</code> environment variable is set</p>
           </div>
 
           <div class="form-group">
@@ -148,8 +149,9 @@
 
         <div v-if="providers.hosting === 'digitalocean'">
           <div class="form-group">
-            <label for="digitalocean-token">API token</label>
-            <input id="digitalocean-token" name="manifest[providers][digitalocean][token]" type="text" class="form-control" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" v-model="digitalocean.token">
+            <label for="digitalocean-token">DigitalOcean token</label>
+            <input id="digitalocean-token" name="manifest[providers][digitalocean][digitalocean_token]" type="text" class="form-control" aria-describedby="digitalocean-token-help" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" v-model="digitalocean.token">
+            <p id="digitalocean-token-help" class="form-text text-muted">Leave this field blank if <code>DIGITALOCEAN_TOKEN</code> environment variable is set</p>
           </div>
         </div>
 
