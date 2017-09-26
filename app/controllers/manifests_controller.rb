@@ -25,7 +25,10 @@ class ManifestsController < ApplicationController
       platform: [:provider, :version],
       hosting: [:provider, server: [:image, :size, :region]],
       dns: [:provider, :domain],
-      providers: [digitalocean: [:digitalocean_token]]
+      providers: [
+        aws: [:aws_access_token_id, :aws_secret_access_key],
+        digitalocean: [:digitalocean_token]
+      ]
     )
   end
 end
