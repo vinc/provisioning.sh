@@ -85,26 +85,67 @@
         <div class="form-group">
           <label for="hosting">Hosting</label>
           <select id="hosting" name="manifest[hosting][provider]" class="form-control" v-model="providers.hosting">
-            <option value="digitalocean">DigitalOcean</option>
+            <option value="aws">Amazon EC2</option>
+            <option value="digitalocean" selected>DigitalOcean</option>
             <option value="linode">Linode</option>
             <option value="rackspace">Rackspace</option>
           </select>
+        </div>
+
+        <div v-if="providers.hosting === 'aws'">
+          <div class="form-group">
+            <label for="aws-access-key-id">AWS access key id</label>
+            <input id="aws-access-key-id" name="manifest[providers][aws][aws_access_key_id]" type="text" class="form-control" aria-describedby="aws-access-key-id-help" placeholder="0123456789ABCDEFGHIJ" v-model="aws.access_key_id">
+            <p id="aws-access-key-id-help" class="form-text text-muted">Leave blank if <code>AWS_ACCESS_KEY_ID</code> environment variable is set</p>
+          </div>
+
+          <div class="form-group">
+            <label for="aws-secret-access-key">AWS secret access key</label>
+            <input id="aws-secret-access-key" name="manifest[providers][aws][aws_secret_access_key]" type="text" class="form-control" aria-describedby="aws-secret-access-key-help" placeholder="0123456789abcdefghijklmnopqrstuvwxyzABCD" v-model="aws.secret_access_key">
+            <p id="aws-secret-access-key-help" class="form-text text-muted">Leave blank if <code>AWS_SECRET_ACCESS_KEY</code> environment variable is set</p>
+          </div>
+
+          <div class="form-group">
+            <label for="aws-server-image">Server image</label>
+            <select id="aws-server-image" name="manifest[hosting][server][image_id]" class="form-control">
+              <option value="ami-6e1a0117" selected>Ubuntu 16.04 LTS</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="aws-server-size">Server size</label>
+            <select id="aws-server-size" name="manifest[hosting][server][flavor_id]" class="form-control">
+              <option value="t2.nano">1 CPU / 0.5 GB</option>
+              <option value="t2.micro" selected>1 CPU / 1 GB</option>
+              <option value="t2.small">1 CPU / 2 GB</option>
+              <option value="t2.medium">2 CPU / 4 GB</option>
+              <option value="t2.large">2 CPU / 8 GB</option>
+              <option value="t2.xlarge">4 CPU / 16 GB</option>
+              <option value="t2.2xlarge">8 CPU / 32 GB</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="aws-server-region">Server region</label>
+            <select id="aws-server-region" name="manifest[hosting][server][region]" class="form-control">
+              <option value="us-west-2">Oregon</option>
+            </select>
+          </div>
         </div>
 
         <div v-if="providers.hosting === 'digitalocean'">
           <div class="form-group">
             <label for="digitalocean-token">DigitalOcean token</label>
             <input id="digitalocean-token" name="manifest[providers][digitalocean][digitalocean_token]" type="text" class="form-control" aria-describedby="digitalocean-token-help" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" v-model="digitalocean.token">
-            <p id="digitalocean-token-help" class="form-text text-muted">Leave this field blank if <code>DIGITALOCEAN_TOKEN</code> environment variable is set</p>
+            <p id="digitalocean-token-help" class="form-text text-muted">Leave blank if <code>DIGITALOCEAN_TOKEN</code> environment variable is set</p>
           </div>
 
           <div class="form-group">
             <label for="digitalocean-server-image">Server image</label>
             <select id="digitalocean-server-image" name="manifest[hosting][server][image]" class="form-control">
-              <option value="ubuntu-16-04-x64">Ubuntu 16.04 x64</option>
-              <option value="ubuntu-16-04-x32">Ubuntu 16.04 x32</option>
-              <option value="ubuntu-14-04-x64">Ubuntu 14.04 x64</option>
-              <option value="ubuntu-14-04-x32">Ubuntu 14.04 x32</option>
+              <option value="ubuntu-17-04-x64">Ubuntu 17.04</option>
+              <option value="ubuntu-16-04-x64" selected>Ubuntu 16.04 LTS</option>
+              <option value="ubuntu-14-04-x64">Ubuntu 14.04 LTS</option>
             </select>
           </div>
 
@@ -112,7 +153,7 @@
             <label for="digitalocean-server-size">Server size</label>
             <select id="digitalocean-server-size" name="manifest[hosting][server][size]" class="form-control">
               <option value="512mb">1 CPU / 512 MB</option>
-              <option value="1gb">1 CPU / 1 GB</option>
+              <option value="1gb" selected>1 CPU / 1 GB</option>
               <option value="2gb">2 CPU / 2 GB</option>
               <option value="4gb">2 CPU / 4 GB</option>
               <option value="8gb">4 CPU / 8 GB</option>
@@ -126,10 +167,11 @@
               <option value="ams3">Amsterdam 3</option>
               <option value="fra1">Frankfurt 1</option>
               <option value="lon1">London 1</option>
-              <option value="nyc1">New York 1</option>
+              <option value="nyc1" selected>New York 1</option>
               <option value="nyc3">New York 3</option>
               <option value="sfo1">San Francisco 1</option>
               <option value="sfo2">San Francisco 2</option>
+              <option value="sgp1">Singapore 1</option>
             </select>
           </div>
         </div>
@@ -141,17 +183,32 @@
         <div class="form-group">
           <label for="dns">DNS</label>
           <select id="dns" name="manifest[dns][provider]" class="form-control" v-model="providers.dns">
-            <option value="digitalocean">DigitalOcean</option>
+            <option value="aws">Amazon Route 53</option>
+            <option value="digitalocean" selected>DigitalOcean</option>
             <option value="linode">Linode</option>
             <option value="rackspace">Rackspace</option>
           </select>
         </div>
 
-        <div v-if="providers.hosting === 'digitalocean'">
+        <div v-if="providers.dns === 'aws'">
+          <div class="form-group">
+            <label for="aws-access-key-id">AWS access key id</label>
+            <input id="aws-access-key-id" name="manifest[providers][aws][aws_access_key_id]" type="text" class="form-control" aria-describedby="aws-access-key-id-help" placeholder="0123456789ABCDEFGHIJ" v-model="aws.access_key_id">
+            <p id="aws-access-key-id-help" class="form-text text-muted">Leave blank if <code>AWS_ACCESS_KEY_ID</code> environment variable is set</p>
+          </div>
+
+          <div class="form-group">
+            <label for="aws-secret-access-key">AWS secret access key</label>
+            <input id="aws-secret-access-key" name="manifest[providers][aws][aws_secret_access_key]" type="text" class="form-control" aria-describedby="aws-secret-access-key-help" placeholder="0123456789abcdefghijklmnopqrstuvwxyzABCD" v-model="aws.secret_access_key">
+            <p id="aws-secret-access-key-help" class="form-text text-muted">Leave blank if <code>AWS_SECRET_ACCESS_KEY</code> environment variable is set</p>
+          </div>
+        </div>
+
+        <div v-if="providers.dns === 'digitalocean'">
           <div class="form-group">
             <label for="digitalocean-token">DigitalOcean token</label>
             <input id="digitalocean-token" name="manifest[providers][digitalocean][digitalocean_token]" type="text" class="form-control" aria-describedby="digitalocean-token-help" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" v-model="digitalocean.token">
-            <p id="digitalocean-token-help" class="form-text text-muted">Leave this field blank if <code>DIGITALOCEAN_TOKEN</code> environment variable is set</p>
+            <p id="digitalocean-token-help" class="form-text text-muted">Leave blank if <code>DIGITALOCEAN_TOKEN</code> environment variable is set</p>
           </div>
         </div>
 

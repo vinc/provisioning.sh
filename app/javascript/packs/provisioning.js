@@ -22,6 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       digitalocean: {
         token: ""
+      },
+      aws: {
+        access_key_id: "",
+        secret_access_key: ""
       }
     },
     watch: {
