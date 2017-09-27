@@ -1,22 +1,33 @@
-<h1 class="display-3 my-5 text-center">Provisioning manifest</h1>
+<h1 class="display-4">Provisioning manifest</h1>
 
-<%= render "layouts/alerts" %>
+<hr class="my-4">
 
-<p>Run the provisioning script:</p>
+<% if manifest.content["providers"]["aws"] %>
+  <p>
+    Export your <a href="http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html">AWS access key</a>
+    and run the provisioning script to create your platform:
+  </p>
 
-<pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ curl -Ls "<%= root_url(uuid: manifest.uuid).sub("/?uuid", "?uuid") %>" | bash</code></pre>
+  <pre class="p-3 my-4 text-console bg-console border border-dark rounded"><code><%= render "console_aws_provisioning" %></code></pre>
+<% else %>
+  <p>
+    Export your <a href="https://cloud.digitalocean.com/settings/api/tokens">DigitalOcean token</a>
+    and run the provisioning script to create your platform:
+  </p>
 
-<p>Alternatively you can manually install the <a href="https://rubygems.org/gems/provisioning" class="bg-light p-1 rounded"><code>provisioning</code></a> gem, download the manifest file, and edit it before provisioning:</p>
+  <pre class="p-3 my-4 text-console bg-console border border-dark rounded"><code><%= render "console_digitalocean_provisioning" %></code></pre>
+<% end %>
 
-<pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ gem install provisioning
-$ curl -o manifest.json "<%= manifest_url(format: :json) %>"
-$ vim manifest.json
-$ provision manifest.json</code></pre>
+<hr class="my-4">
 
-<p>If you left out some secrets from the manifest file, set them as environment variables before running the script:</p>
+<p>What this script does is install the <a href="https://rubygems.org/gems/provisioning">provisioning gem</a>, download the manifest file, look for missing stuff like your SSH public key, and run it:</p>
 
-<pre class="text-secondary bg-light p-3 my-4 border rounded"><code>$ export DIGITALOCEAN_TOKEN="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"</code></pre>
+<pre class="p-3 my-4 text-console bg-console border border-dark rounded"><code><%= render "console_manual_provisioning" %></code></pre>
+
+<hr class="my-4">
+
+<p>This provisioning manifest will be automatically deleted in less than 24 hours.</p>
 
 <div class="text-center">
-  <%= link_to "Delete", manifest, data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-lg btn-danger", role: "button" %>
+  <%= link_to "Delete now", manifest, data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-lg btn-outline-danger", role: "button" %>
 </div>

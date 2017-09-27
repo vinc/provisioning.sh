@@ -13,9 +13,13 @@
 
   <body class="<%= controller.controller_name %>">
     <div class="container d-flex flex-column" style="min-height:100vh">
-      <div>
-        <%= yield %>
-      </div>
+      <section>
+        <%= render "layouts/alerts" %>
+
+        <div class="content p-4 rounded">
+          <%= yield %>
+        </div>
+      </section>
 
       <footer class="mt-auto credits">
         <p class="text-center mt-5">

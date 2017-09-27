@@ -1,0 +1,3 @@
+$ export AWS_ACCESS_KEY_ID=xxxxxxx
+$ export AWS_SECRET_ACCESS_KEY=xxxxxxx
+$ curl -Ls "<%= root_url(uuid: manifest.uuid).sub("/?uuid", "?uuid") %>" | bash

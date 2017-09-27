@@ -1,4 +1,5 @@
 class Manifest < ApplicationRecord
+  # TODO: store those in postgres instead of exporting everything into `content`
   FIELDS = [:ssh, :app, :platform, :hosting, :dns, :cloud, :providers].freeze
 
   attr_accessor(*FIELDS)
@@ -29,9 +30,11 @@ class Manifest < ApplicationRecord
       self.dns = {
         provider: cloud[:provider]
       }
+      self.providers = {}
       
       case cloud[:provider]
       when "digitalocean"
+        providers[:digitalocean] = {}
         hosting[:server][:region] = "sfo1"
         hosting[:server][:image] = "ubuntu-16-04-x64"
         case platform[:provider]
@@ -41,6 +44,7 @@ class Manifest < ApplicationRecord
           hosting[:server][:size] = "4gb"
         end
       when "aws"
+        providers[:aws] = {}
         hosting[:region] = "us-west-2"
         hosting[:server][:image_id] = "ami-6e1a0117"
         case platform[:provider]

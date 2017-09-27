@@ -14,8 +14,40 @@
  *= require_self
  */
 
+$link-color: chartreuse;
+
 @import "bootstrap/scss/bootstrap";
 
 [v-cloak] {
   visibility: hidden;
+}
+
+@mixin text-and-link-color($color) {
+  color: $color;
+  a {
+    color: $color;
+  }
+}
+
+body {
+  background: #38C;
+  color: rgba(255, 255, 255, 0.95);
+  max-width: 45em;
+  margin: 1em auto;
+
+  .content {
+    background: rgba(255, 255, 255, 0.1)
+  }
+}
+
+footer.credits {
+  @include text-and-link-color(rgba(255, 255, 255, 0.5));
+}
+
+.text-console {
+  color: chartreuse;
+}
+
+.bg-console {
+  background: rgba(0, 0, 0, 0.5);
 }
