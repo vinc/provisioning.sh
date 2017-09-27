@@ -1,235 +1,148 @@
-<h1 class="display-3 my-5 text-center">Provisioning.sh</h1>
+<div class="content p-4 rounded">
+  <h1 class="display-4 text-center">Provisioning manifest</h1>
 
-<%= render "layouts/alerts" %>
+  <hr>
 
-<%= form_with model: manifest, local: true, id: "provisioning" do |form| %>
-  <div class="card text-white bg-primary">
-    <div class="card-header">
-      <ul id="provisioning-tabs" class="nav nav-tabs card-header-tabs" role="tablist">
-        <li class="nav-item">
-        </li>
-        <li class="nav-item">
-          <a id="app-tab" class="nav-link active" href="#app" data-toggle="tab" role="tab">App</a>
-        </li>
-        <li class="nav-item">
-          <a id="platform-tab" class="nav-link" href="#platform" data-toggle="tab" role="tab">Platform</a>
-        </li>
-        <li class="nav-item">
-          <a id="hosting-tab" class="nav-link" href="#hosting" data-toggle="tab" role="tab">Hosting</a>
-        </li>
-        <li class="nav-item">
-          <a id="dns-tab" class="nav-link" href="#dns" data-toggle="tab" role="tab">DNS</a>
-        </li>
-        <li class="nav-item">
-          <a id="save-tab" class="nav-link" href="#save" data-toggle="tab" role="tab">Save</a>
-        </li>
-      </ul>
+  <%= form_with model: manifest, local: true, id: "provisioning" do |form| %>
+    <h3 class="text-center">App</h3>
+
+    <div class="form-group">
+      <label for="app-name">Name</label>
+      <input id="app-name" name="manifest[app][name]" type="text" class="form-control" aria-describedby="app-name-help" placeholder="app" v-model="app">
+      <p id="app-name-help" class="form-text text-muted" v-cloak>https://<strong>{{helps.app}}</strong>.{{helps.domain}}</p>
     </div>
 
-    <div class="card-body tab-content">
-      <div class="tab-pane fade show active" id="app" role="tabpanel" aria-labelledby="app-tab">
-        <h4 class="card-title">App settings</h4>
+    <div class="form-group">
+      <label for="app-domains">Custom domains</label>
+      <input id="app-domains" name="manifest[app][domains]" type="text" class="form-control" placeholder="app.com, www.app.com">
+    </div>
 
-        <div class="form-group">
-          <label for="app-name">Name</label>
-          <input id="app-name" name="manifest[app][name]" type="text" class="form-control" aria-describedby="app-name-help" placeholder="app" v-model="app">
-          <p id="app-name-help" class="form-text text-muted" v-cloak>https://<strong>{{helps.app}}</strong>.{{helps.domain}}</p>
-        </div>
+    <div class="form-group">
+      <label for="app-services">Services</label>
+      <select id="app-services" name="manifest[app][services][]" class="form-control" multiple>
+        <option value="mongo">Mongo</option>
+        <option value="mysql">MySQL</option>
+        <option value="postgres">Postgres</option>
+        <option value="redis">Redis</option>
+      </select>
+    </div>
 
-        <div class="form-group">
-          <label for="app-domains">Custom domains</label>
-          <input id="app-domains" name="manifest[app][domains]" type="text" class="form-control" placeholder="app.com, www.app.com">
-        </div>
+    <hr>
 
-        <div class="form-group">
-          <label for="app-services">Services</label>
-          <select id="app-services" name="manifest[app][services][]" class="form-control" multiple>
-            <option value="mongo">Mongo</option>
-            <option value="postgres">Postgres</option>
-            <option value="redis">Redis</option>
-          </select>
-        </div>
+    <h3 class="text-center">Platform</h3>
+
+    <div class="form-group">
+      <label for="platform">Platform provider</label>
+      <select id="platform" name="manifest[platform][provider]" class="form-control" v-model="providers.platform">
+        <option value="dokku">Dokku</option>
+        <option value="flynn">Flynn</option>
+      </select>
+    </div>
+
+    <hr>
+
+    <h3 class="text-center">Hosting</h3>
+
+    <div class="form-group">
+      <label for="hosting">Hosting provider</label>
+      <select id="hosting" name="manifest[hosting][provider]" class="form-control" v-model="providers.hosting">
+        <option value="aws">Amazon EC2</option>
+        <option value="digitalocean" selected>DigitalOcean</option>
+        <option value="linode">Linode</option>
+        <option value="rackspace">Rackspace</option>
+      </select>
+    </div>
+
+    <div v-if="providers.hosting === 'aws'">
+      <div class="form-group">
+        <label for="aws-region">AWS region</label>
+        <select id="aws-region" name="manifest[hosting][region]" class="form-control">
+          <option value="us-west-2">Oregon</option>
+        </select>
       </div>
 
-      <div class="tab-pane fade" id="platform" role="tabpanel" aria-labelledby="platform-tab">
-        <h4 class="card-title">Platform settings</h4>
-
-        <div class="form-group">
-          <label for="platform">Platform</label>
-          <select id="platform" name="manifest[platform][provider]" class="form-control" v-model="providers.platform">
-            <option value="dokku">Dokku</option>
-            <option value="flynn">Flynn</option>
-          </select>
-        </div>
-
-        <div v-if="providers.platform === 'dokku'">
-          <div class="form-group">
-            <label for="dokku-version">Version</label>
-            <select id="dokku-version" name="manifest[platform][version]" class="form-control">
-              <option>v0.10.4</option>
-              <option>v0.9.4</option>
-              <option>v0.8.2</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="ssh-key">SSH public key</label>
-          <textarea id="ssh-key" name="manifest[ssh][key]" class="form-control" row="6" style="height:10em" placeholder="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1HxvTzPAMyE9tbbQ7drVYVEnrd1ViKZfOWTwrtGNX1vS7xJvpiNnAaabw0bPAtNV/fK7U/saIKJLkWVVpyf51rYS+YzBM3ZAexGyFqJKpKc9869A1O4Qih+bhTaoEEp7m31HZNY3QFmqxCIS69UE2bsMZgUr+rr+0uQqSkdQDQrBh8wDeFL6WkgkMuWg8ni9UP8JIQPRxkg232WC9r1mZ1KVlxRfesS9iY+Xu3MiGVMbo3mQbN1YzT6TQybG5SryBeRVQZTvwonumJS4ufPH9B1BGxQ1R24jDwFY0j1d5NQp1rr2OGax+EzNI/bUKvWcem/VI5uZ4Bev9IPqbvPbV example@provisioning.sh"></textarea>
-        </div>
+      <div class="form-group">
+        <label for="aws-server-image">Server image</label>
+        <select id="aws-server-image" name="manifest[hosting][server][image_id]" class="form-control">
+          <option value="ami-6e1a0117" selected>Ubuntu 16.04 LTS</option>
+        </select>
       </div>
 
-      <div class="tab-pane fade" id="hosting" role="tabpanel" aria-labelledby="hosting-tab">
-        <h4 class="card-title">Hosting settings</h4>
-
-        <div class="form-group">
-          <label for="hosting">Hosting</label>
-          <select id="hosting" name="manifest[hosting][provider]" class="form-control" v-model="providers.hosting">
-            <option value="aws">Amazon EC2</option>
-            <option value="digitalocean" selected>DigitalOcean</option>
-            <option value="linode">Linode</option>
-            <option value="rackspace">Rackspace</option>
-          </select>
-        </div>
-
-        <div v-if="providers.hosting === 'aws'">
-          <div class="form-group">
-            <label for="aws-access-key-id">AWS access key id</label>
-            <input id="aws-access-key-id" name="manifest[providers][aws][aws_access_key_id]" type="text" class="form-control" aria-describedby="aws-access-key-id-help" placeholder="0123456789ABCDEFGHIJ" v-model="aws.access_key_id">
-            <p id="aws-access-key-id-help" class="form-text text-muted">Leave blank if <code>AWS_ACCESS_KEY_ID</code> environment variable is set</p>
-          </div>
-
-          <div class="form-group">
-            <label for="aws-secret-access-key">AWS secret access key</label>
-            <input id="aws-secret-access-key" name="manifest[providers][aws][aws_secret_access_key]" type="text" class="form-control" aria-describedby="aws-secret-access-key-help" placeholder="0123456789abcdefghijklmnopqrstuvwxyzABCD" v-model="aws.secret_access_key">
-            <p id="aws-secret-access-key-help" class="form-text text-muted">Leave blank if <code>AWS_SECRET_ACCESS_KEY</code> environment variable is set</p>
-          </div>
-
-          <div class="form-group">
-            <label for="aws-region">AWS region</label>
-            <select id="aws-region" name="manifest[hosting][region]" class="form-control">
-              <option value="us-west-2">Oregon</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="aws-server-image">Server image</label>
-            <select id="aws-server-image" name="manifest[hosting][server][image_id]" class="form-control">
-              <option value="ami-6e1a0117" selected>Ubuntu 16.04 LTS</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="aws-server-size">Server size</label>
-            <select id="aws-server-size" name="manifest[hosting][server][flavor_id]" class="form-control">
-              <option value="t2.nano">1 CPU / 0.5 GB</option>
-              <option value="t2.micro" selected>1 CPU / 1 GB</option>
-              <option value="t2.small">1 CPU / 2 GB</option>
-              <option value="t2.medium">2 CPU / 4 GB</option>
-              <option value="t2.large">2 CPU / 8 GB</option>
-              <option value="t2.xlarge">4 CPU / 16 GB</option>
-              <option value="t2.2xlarge">8 CPU / 32 GB</option>
-            </select>
-          </div>
-        </div>
-
-        <div v-if="providers.hosting === 'digitalocean'">
-          <div class="form-group">
-            <label for="digitalocean-token">DigitalOcean token</label>
-            <input id="digitalocean-token" name="manifest[providers][digitalocean][digitalocean_token]" type="text" class="form-control" aria-describedby="digitalocean-token-help" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" v-model="digitalocean.token">
-            <p id="digitalocean-token-help" class="form-text text-muted">Leave blank if <code>DIGITALOCEAN_TOKEN</code> environment variable is set</p>
-          </div>
-
-          <div class="form-group">
-            <label for="digitalocean-server-region">Server region</label>
-            <select id="digitalocean-server-region" name="manifest[hosting][server][region]" class="form-control">
-              <option value="ams2">Amsterdam 2</option>
-              <option value="ams3">Amsterdam 3</option>
-              <option value="fra1">Frankfurt 1</option>
-              <option value="lon1">London 1</option>
-              <option value="nyc1" selected>New York 1</option>
-              <option value="nyc3">New York 3</option>
-              <option value="sfo1">San Francisco 1</option>
-              <option value="sfo2">San Francisco 2</option>
-              <option value="sgp1">Singapore 1</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="digitalocean-server-image">Server image</label>
-            <select id="digitalocean-server-image" name="manifest[hosting][server][image]" class="form-control">
-              <option value="ubuntu-17-04-x64">Ubuntu 17.04</option>
-              <option value="ubuntu-16-04-x64" selected>Ubuntu 16.04 LTS</option>
-              <option value="ubuntu-14-04-x64">Ubuntu 14.04 LTS</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="digitalocean-server-size">Server size</label>
-            <select id="digitalocean-server-size" name="manifest[hosting][server][size]" class="form-control">
-              <option value="512mb">1 CPU / 512 MB</option>
-              <option value="1gb" selected>1 CPU / 1 GB</option>
-              <option value="2gb">2 CPU / 2 GB</option>
-              <option value="4gb">2 CPU / 4 GB</option>
-              <option value="8gb">4 CPU / 8 GB</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-pane fade" id="dns" role="tabpanel" aria-labelledby="dns-tab">
-        <h4 class="card-title">DNS settings</h4>
-
-        <div class="form-group">
-          <label for="dns">DNS</label>
-          <select id="dns" name="manifest[dns][provider]" class="form-control" v-model="providers.dns">
-            <option value="aws">Amazon Route 53</option>
-            <option value="digitalocean" selected>DigitalOcean</option>
-            <option value="linode">Linode</option>
-            <option value="rackspace">Rackspace</option>
-          </select>
-        </div>
-
-        <div v-if="providers.dns === 'aws'">
-          <div class="form-group">
-            <label for="aws-access-key-id">AWS access key id</label>
-            <input id="aws-access-key-id" name="manifest[providers][aws][aws_access_key_id]" type="text" class="form-control" aria-describedby="aws-access-key-id-help" placeholder="0123456789ABCDEFGHIJ" v-model="aws.access_key_id">
-            <p id="aws-access-key-id-help" class="form-text text-muted">Leave blank if <code>AWS_ACCESS_KEY_ID</code> environment variable is set</p>
-          </div>
-
-          <div class="form-group">
-            <label for="aws-secret-access-key">AWS secret access key</label>
-            <input id="aws-secret-access-key" name="manifest[providers][aws][aws_secret_access_key]" type="text" class="form-control" aria-describedby="aws-secret-access-key-help" placeholder="0123456789abcdefghijklmnopqrstuvwxyzABCD" v-model="aws.secret_access_key">
-            <p id="aws-secret-access-key-help" class="form-text text-muted">Leave blank if <code>AWS_SECRET_ACCESS_KEY</code> environment variable is set</p>
-          </div>
-        </div>
-
-        <div v-if="providers.dns === 'digitalocean'">
-          <div class="form-group">
-            <label for="digitalocean-token">DigitalOcean token</label>
-            <input id="digitalocean-token" name="manifest[providers][digitalocean][digitalocean_token]" type="text" class="form-control" aria-describedby="digitalocean-token-help" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" v-model="digitalocean.token">
-            <p id="digitalocean-token-help" class="form-text text-muted">Leave blank if <code>DIGITALOCEAN_TOKEN</code> environment variable is set</p>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="domain">Wildcard domain</label>
-          <input id="domain" name="manifest[dns][domain]" type="text" class="form-control" aria-describedby="domain-help" placeholder="example.com" v-model="domain">
-          <p id="domain-help" class="form-text text-muted" v-cloak>https://{{helps.app}}.<strong>{{helps.domain}}</strong></p>
-        </div>
-      </div>
-
-      <div class="tab-pane fade" id="save" role="tabpanel" aria-labelledby="save-tab">
-        <h4 class="card-title">Save settings</h4>
-
-        <p>This action will generate a link to a provisioning script that you can download and execute:</p>
-
-        <pre class="text-secondary bg-light p-3 mb-4 border rounded"><code>$ curl -Ls "https://provisioning.sh?uuid=[random unique identifier]" | bash</code></pre>
-
-        <p class="text-center">
-          <button type="submit" class="btn btn-lg btn-primary">Save</button>
-        </p>
+      <div class="form-group">
+        <label for="aws-server-size">Server size</label>
+        <select id="aws-server-size" name="manifest[hosting][server][flavor_id]" class="form-control">
+          <option value="t2.nano">1 CPU / 0.5 GB</option>
+          <option value="t2.micro" selected>1 CPU / 1 GB</option>
+          <option value="t2.small">1 CPU / 2 GB</option>
+          <option value="t2.medium">2 CPU / 4 GB</option>
+          <option value="t2.large">2 CPU / 8 GB</option>
+          <option value="t2.xlarge">4 CPU / 16 GB</option>
+          <option value="t2.2xlarge">8 CPU / 32 GB</option>
+        </select>
       </div>
     </div>
-  </div>
-<% end %>
+
+    <div v-if="providers.hosting === 'digitalocean'">
+      <div class="form-group">
+        <label for="digitalocean-server-region">Server region</label>
+        <select id="digitalocean-server-region" name="manifest[hosting][server][region]" class="form-control">
+          <option value="ams2">Amsterdam 2</option>
+          <option value="ams3">Amsterdam 3</option>
+          <option value="fra1">Frankfurt 1</option>
+          <option value="lon1">London 1</option>
+          <option value="nyc1" selected>New York 1</option>
+          <option value="nyc3">New York 3</option>
+          <option value="sfo1">San Francisco 1</option>
+          <option value="sfo2">San Francisco 2</option>
+          <option value="sgp1">Singapore 1</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="digitalocean-server-image">Server image</label>
+        <select id="digitalocean-server-image" name="manifest[hosting][server][image]" class="form-control">
+          <option value="ubuntu-17-04-x64">Ubuntu 17.04</option>
+          <option value="ubuntu-16-04-x64" selected>Ubuntu 16.04 LTS</option>
+          <option value="ubuntu-14-04-x64">Ubuntu 14.04 LTS</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="digitalocean-server-size">Server size</label>
+        <select id="digitalocean-server-size" name="manifest[hosting][server][size]" class="form-control">
+          <option value="512mb">1 CPU / 512 MB</option>
+          <option value="1gb" selected>1 CPU / 1 GB</option>
+          <option value="2gb">2 CPU / 2 GB</option>
+          <option value="4gb">2 CPU / 4 GB</option>
+          <option value="8gb">4 CPU / 8 GB</option>
+        </select>
+      </div>
+    </div>
+
+    <hr>
+
+    <h3 class="text-center">DNS</h3>
+
+    <div class="form-group">
+      <label for="dns">DNS provider</label>
+      <select id="dns" name="manifest[dns][provider]" class="form-control" v-model="providers.dns">
+        <option value="aws">Amazon Route 53</option>
+        <option value="digitalocean" selected>DigitalOcean</option>
+        <option value="linode">Linode</option>
+        <option value="rackspace">Rackspace</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="domain">Platform domain</label>
+      <input id="domain" name="manifest[dns][domain]" type="text" class="form-control" aria-describedby="domain-help" placeholder="example.com" required v-model="domain">
+      <p id="domain-help" class="form-text text-muted" v-cloak>https://{{helps.app}}.<strong>{{helps.domain}}</strong></p>
+    </div>
+
+    <hr>
+
+    <div class="text-center mt-5 mb-4">
+      <button type="submit" class="btn btn-lg btn-success" style="background:chartreuse">Generate</button>
+    </div>
+  <% end %>
+</div>

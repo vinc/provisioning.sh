@@ -1,57 +1,54 @@
-<h1 class="display-4">Provisioning.sh</h1>
-<p class="lead">Deploying your web app, to your own platform, has never been so easy.</p>
+<div class="content p-4 rounded">
+  <h1 class="display-4">Provisioning.sh</h1>
+  <p class="lead">Deploying your web app, to your own platform, has never been so easy.</p>
 
-<hr class="my-4">
+  <hr class="my-4">
 
-<pre class="p-3 my-4 text-console bg-console border border-dark rounded"><code>$ rails new example
-$ cd example
-$ git commit # ready to deploy?
-$ firefox https://provisioning.sh # fill form, copy link
-$ export DIGITALOCEAN_TOKEN=xxxxxxx
-$ curl -Ls "https://provisioning.sh?uuid=xxxxxxx" | bash
-$ git push dokku master # deployed :)</code></pre>
+  <pre class="p-3 my-4 text-console bg-console border border-console rounded"><code><%= render "console_example" %></code></pre>
 
-<hr class="my-4">
+  <hr class="my-4">
 
-<%= form_with model: manifest, local: true, id: "provisioning" do |form| %>
-  <div class="form-group row">
-    <label for="domain" class="col-sm-2 col-form-label">Domain</label>
-    <div class="col-sm-10">
-      <input id="domain" name="manifest[app][domains]" type="text" class="form-control" placeholder="example.com" required>
+  <%= form_with model: manifest, local: true, id: "provisioning" do |form| %>
+    <div class="form-group row">
+      <label for="domain" class="col-sm-2 col-form-label">Domain</label>
+      <div class="col-sm-10">
+        <input id="domain" name="manifest[app][domains]" type="text" class="form-control" placeholder="example.com" required>
+      </div>
     </div>
-  </div>
 
-  <div class="form-group row">
-    <label for="app-services" class="col-sm-2 col-form-label">Services</label>
-    <div class="col-sm-10">
-      <select id="app-services" name="manifest[app][services][]" class="form-control">
-        <option value="mongo">Mongo</option>
-        <option value="postgres" selected>Postgres</option>
-      </select>
+    <div class="form-group row">
+      <label for="app-services" class="col-sm-2 col-form-label">Services</label>
+      <div class="col-sm-10">
+        <select id="app-services" name="manifest[app][services][]" class="form-control">
+          <option value="mongo">Mongo</option>
+          <option value="mysql">MySQL</option>
+          <option value="postgres" selected>Postgres</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-  <div class="form-group row">
-    <label for="platform" class="col-sm-2 col-form-label">Platform</label>
-    <div class="col-sm-10">
-      <select id="platform" name="manifest[platform][provider]" class="form-control">
-        <option value="dokku" selected>Dokku (1x1GB server)</option>
-        <option value="flynn">Flynn (3x2GB cluster)</option>
-      </select>
+    <div class="form-group row">
+      <label for="platform" class="col-sm-2 col-form-label">Platform</label>
+      <div class="col-sm-10">
+        <select id="platform" name="manifest[platform][provider]" class="form-control">
+          <option value="dokku" selected>Dokku (1x1GB server)</option>
+          <option value="flynn">Flynn (3x2GB cluster)</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-  <div class="form-group row">
-    <label for="cloud" class="col-sm-2 col-form-label">Cloud</label>
-    <div class="col-sm-10">
-      <select id="cloud" name="manifest[cloud][provider]" class="form-control">
-        <option value="aws">Amazon Web Services</option>
-        <option value="digitalocean" selected>DigitalOcean</option>
-      </select>
+    <div class="form-group row">
+      <label for="cloud" class="col-sm-2 col-form-label">Cloud</label>
+      <div class="col-sm-10">
+        <select id="cloud" name="manifest[cloud][provider]" class="form-control">
+          <option value="aws">Amazon Web Services</option>
+          <option value="digitalocean" selected>DigitalOcean</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-  <p class="text-center mt-5 mb-0">
-    <button type="submit" class="btn btn-lg btn-success" style="background:chartreuse">Deploy</button>
-  </p>
-<% end %>
+    <div class="text-center mt-5 mb-4">
+      <button type="submit" class="btn btn-lg btn-success" style="background:chartreuse">Generate</button>
+    </div>
+  <% end %>
+</div>

@@ -22,6 +22,8 @@ class Manifest < ApplicationRecord
   end
 
   def fill_blank_attributes
+    self.providers ||= {}
+
     if cloud.present? # landing page
       self.hosting = {
         provider: cloud[:provider],
@@ -30,11 +32,9 @@ class Manifest < ApplicationRecord
       self.dns = {
         provider: cloud[:provider]
       }
-      self.providers = {}
       
       case cloud[:provider]
       when "digitalocean"
-        providers[:digitalocean] = {}
         hosting[:server][:region] = "sfo1"
         hosting[:server][:image] = "ubuntu-16-04-x64"
         case platform[:provider]
@@ -44,7 +44,6 @@ class Manifest < ApplicationRecord
           hosting[:server][:size] = "4gb"
         end
       when "aws"
-        providers[:aws] = {}
         hosting[:region] = "us-west-2"
         hosting[:server][:image_id] = "ami-6e1a0117"
         case platform[:provider]
@@ -63,6 +62,8 @@ class Manifest < ApplicationRecord
       self.cloud = nil
     end
     
+    providers[hosting[:provider]] = {}
+    providers[dns[:provider]] = {}
     dns[:domain] ||= app[:domains].first || "example.com" # error if empty?
     app[:name] ||= dns[:domain].tr(".", "-")
   end

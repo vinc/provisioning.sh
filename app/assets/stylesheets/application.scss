@@ -15,6 +15,9 @@
  */
 
 $link-color: chartreuse;
+$link-hover-color: lighten($link-color, 15%);
+$text-muted: rgba(white, 0.6);
+$hr-border-color: rgba(white, 0.3);
 
 @import "bootstrap/scss/bootstrap";
 
@@ -31,17 +34,20 @@ $link-color: chartreuse;
 
 body {
   background: #38C;
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba($white, 0.95);
   max-width: 45em;
   margin: 1em auto;
 
   .content {
-    background: rgba(255, 255, 255, 0.1)
+    background: rgba($white, 0.1)
   }
 }
 
 footer.credits {
-  @include text-and-link-color(rgba(255, 255, 255, 0.5));
+  @include text-and-link-color(rgba($white, 0.5));
+  a:hover {
+    color: rgba($white, 0.8);
+  }
 }
 
 .text-console {
@@ -49,5 +55,9 @@ footer.credits {
 }
 
 .bg-console {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba($black, 0.5);
+}
+
+.border-console {
+  border-color: rgba(128, 128, 128, 0.5) !important;
 }

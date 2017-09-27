@@ -19,13 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
         dns: "digitalocean",
         hosting: "digitalocean",
         platform: "dokku"
-      },
-      digitalocean: {
-        token: ""
-      },
-      aws: {
-        access_key_id: "",
-        secret_access_key: ""
       }
     },
     watch: {
