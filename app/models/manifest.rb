@@ -1,6 +1,6 @@
 class Manifest < ApplicationRecord
   # TODO: store those in postgres instead of exporting everything into `content`
-  FIELDS = [:ssh, :app, :platform, :hosting, :dns, :cloud, :providers].freeze
+  FIELDS = [:app, :platform, :hosting, :dns, :cloud].freeze
 
   attr_accessor(*FIELDS)
 
@@ -22,8 +22,6 @@ class Manifest < ApplicationRecord
   end
 
   def fill_blank_attributes
-    self.providers ||= {}
-
     if cloud.present? # landing page
       self.hosting = {
         provider: cloud[:provider],
@@ -62,10 +60,17 @@ class Manifest < ApplicationRecord
       self.cloud = nil
     end
     
-    providers[hosting[:provider]] = {}
-    providers[dns[:provider]] = {}
     dns[:domain] ||= app[:domains].first || "example.com" # error if empty?
     app[:name] ||= dns[:domain].tr(".", "-")
+  end
+
+  def providers
+    {}.tap do |hash|
+      %w[platform hosting dns].each do |field|
+        provider = content[field]["provider"]
+        hash[provider] = true
+      end
+    end
   end
 
   def to_param
