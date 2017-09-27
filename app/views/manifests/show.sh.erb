@@ -12,9 +12,8 @@ main() {
   if ! hash provision 2> /dev/null; then
     gem install provisioning
   fi
-
   curl -s "<%= manifest_url(format: :json) %>" > "$temp"
-
+  export SSH_PUBLIC_KEY="$(cat ~/.ssh/id_rsa.pub)"
   provision "$temp"
 }
 

@@ -3,5 +3,5 @@ $ cd example
 $ git commit # ready to deploy?
 $ firefox https://provisioning.sh # fill form, copy link
 $ export DIGITALOCEAN_TOKEN=xxxxxxx
-$ curl -Ls "https://provisioning.sh?uuid=xxxxxxx" | bash
+$ curl -sSL "https://provisioning.sh?uuid=xxxxxxx" | bash
 $ git push dokku master # deployed :)

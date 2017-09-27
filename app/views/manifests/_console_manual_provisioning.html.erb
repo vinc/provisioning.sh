@@ -1,4 +1,4 @@
 $ gem install provisioning
 $ curl -o manifest.json "<%= manifest_url(format: :json) %>"
-$ SSH_PUBLIC_KEY="$(cat ~/.ssh/id_rsa.pub)"
+$ export SSH_PUBLIC_KEY="$(cat ~/.ssh/id_rsa.pub)"
 $ provision manifest.json
