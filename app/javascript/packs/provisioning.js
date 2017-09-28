@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       providers: {
         dns: "digitalocean",
-        hosting: "digitalocean",
+        compute: "digitalocean",
         platform: "dokku"
       }
     },

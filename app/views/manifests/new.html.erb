@@ -47,11 +47,11 @@
 
     <hr>
 
-    <h3 class="text-center">Hosting</h3>
+    <h3 class="text-center">Compute</h3>
 
     <div class="form-group">
-      <label for="hosting">Hosting provider</label>
-      <select id="hosting" name="manifest[hosting][provider]" class="form-control" v-model="providers.hosting">
+      <label for="compute">Compute provider</label>
+      <select id="compute" name="manifest[compute][provider]" class="form-control" v-model="providers.compute">
         <option value="aws">Amazon EC2</option>
         <option value="digitalocean" selected>DigitalOcean</option>
         <option value="linode">Linode</option>
@@ -59,24 +59,24 @@
       </select>
     </div>
 
-    <div v-if="providers.hosting === 'aws'">
+    <div v-if="providers.compute === 'aws'">
       <div class="form-group">
         <label for="aws-region">AWS region</label>
-        <select id="aws-region" name="manifest[hosting][region]" class="form-control">
+        <select id="aws-region" name="manifest[compute][region]" class="form-control">
           <option value="us-west-2">Oregon</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="aws-server-image">Server image</label>
-        <select id="aws-server-image" name="manifest[hosting][server][image_id]" class="form-control">
+        <select id="aws-server-image" name="manifest[compute][server][image_id]" class="form-control">
           <option value="ami-6e1a0117" selected>Ubuntu 16.04 LTS</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="aws-server-size">Server size</label>
-        <select id="aws-server-size" name="manifest[hosting][server][flavor_id]" class="form-control">
+        <select id="aws-server-size" name="manifest[compute][server][flavor_id]" class="form-control">
           <option value="t2.nano">1 CPU / 0.5 GB</option>
           <option value="t2.micro" selected>1 CPU / 1 GB</option>
           <option value="t2.small">1 CPU / 2 GB</option>
@@ -88,10 +88,10 @@
       </div>
     </div>
 
-    <div v-if="providers.hosting === 'digitalocean'">
+    <div v-if="providers.compute === 'digitalocean'">
       <div class="form-group">
         <label for="digitalocean-server-region">Server region</label>
-        <select id="digitalocean-server-region" name="manifest[hosting][server][region]" class="form-control">
+        <select id="digitalocean-server-region" name="manifest[compute][server][region]" class="form-control">
           <option value="ams2">Amsterdam 2</option>
           <option value="ams3">Amsterdam 3</option>
           <option value="fra1">Frankfurt 1</option>
@@ -106,7 +106,7 @@
 
       <div class="form-group">
         <label for="digitalocean-server-image">Server image</label>
-        <select id="digitalocean-server-image" name="manifest[hosting][server][image]" class="form-control">
+        <select id="digitalocean-server-image" name="manifest[compute][server][image]" class="form-control">
           <option value="ubuntu-17-04-x64">Ubuntu 17.04</option>
           <option value="ubuntu-16-04-x64" selected>Ubuntu 16.04 LTS</option>
           <option value="ubuntu-14-04-x64">Ubuntu 14.04 LTS</option>
@@ -115,7 +115,7 @@
 
       <div class="form-group">
         <label for="digitalocean-server-size">Server size</label>
-        <select id="digitalocean-server-size" name="manifest[hosting][server][size]" class="form-control">
+        <select id="digitalocean-server-size" name="manifest[compute][server][size]" class="form-control">
           <option value="512mb">1 CPU / 512 MB</option>
           <option value="1gb" selected>1 CPU / 1 GB</option>
           <option value="2gb">2 CPU / 2 GB</option>

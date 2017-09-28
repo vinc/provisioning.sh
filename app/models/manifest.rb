@@ -1,6 +1,6 @@
 class Manifest < ApplicationRecord
   # TODO: store those in postgres instead of exporting everything into `content`
-  FIELDS = [:app, :platform, :hosting, :dns, :cloud].freeze
+  FIELDS = [:app, :platform, :compute, :dns, :cloud].freeze
 
   attr_accessor(*FIELDS)
 
@@ -23,7 +23,7 @@ class Manifest < ApplicationRecord
 
   def fill_blank_attributes
     if cloud.present? # landing page
-      self.hosting = {
+      self.compute = {
         provider: cloud[:provider],
         server: {}
       }
@@ -33,22 +33,22 @@ class Manifest < ApplicationRecord
       
       case cloud[:provider]
       when "digitalocean"
-        hosting[:server][:region] = "sfo1"
-        hosting[:server][:image] = "ubuntu-16-04-x64"
+        compute[:server][:region] = "sfo1"
+        compute[:server][:image] = "ubuntu-16-04-x64"
         case platform[:provider]
         when "dokku"
-          hosting[:server][:size] = "1gb"
+          compute[:server][:size] = "1gb"
         when "flynn"
-          hosting[:server][:size] = "4gb"
+          compute[:server][:size] = "4gb"
         end
       when "aws"
-        hosting[:region] = "us-west-2"
-        hosting[:server][:image_id] = "ami-6e1a0117"
+        compute[:region] = "us-west-2"
+        compute[:server][:image_id] = "ami-6e1a0117"
         case platform[:provider]
         when "dokku"
-          hosting[:server][:flavor_id] = "t2.micro"
+          compute[:server][:flavor_id] = "t2.micro"
         when "flynn"
-          hosting[:server][:flavor_id] = "t2.medium"
+          compute[:server][:flavor_id] = "t2.medium"
         end
       end
 
@@ -66,7 +66,7 @@ class Manifest < ApplicationRecord
 
   def providers
     {}.tap do |hash|
-      %w[platform hosting dns].each do |field|
+      %w[platform compute dns].each do |field|
         provider = content[field]["provider"]
         hash[provider] = true
       end
