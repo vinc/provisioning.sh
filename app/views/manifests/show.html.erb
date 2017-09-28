@@ -21,7 +21,7 @@
 
   <hr class="my-4">
 
-  <p>What this script does is install the <a href="https://rubygems.org/gems/provisioning">provisioning gem</a>, download this manifest file, look for your SSH public key, and run it:</p>
+  <p>What this script does is install the <a href="https://rubygems.org/gems/provisioning">provisioning gem</a>, download this <%= link_to "manifest file", manifest_path(manifest, format: :json) %>, look for your SSH public key, and run it:</p>
 
   <pre class="p-3 my-4 text-console bg-console border border-console rounded"><code><%= render "console_manual_provisioning" %></code></pre>
 
