@@ -23,10 +23,7 @@ class ManifestsController < ApplicationController
       ssh: [:key],
       app: [:name, :domains, services: []],
       platform: [:provider, :domain, :version],
-      compute: [
-        :provider, :region,
-        server: [:image, :image_id, :flavor_id, :size, :region]
-      ],
+      compute: [:provider, :region, :image, :image_id, :flavor_id, :size],
       dns: [:provider],
       cloud: [:provider]
     )

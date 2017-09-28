@@ -24,8 +24,7 @@ class Manifest < ApplicationRecord
   def fill_blank_attributes
     if cloud.present? # landing page
       self.compute = {
-        provider: cloud[:provider],
-        server: {}
+        provider: cloud[:provider]
       }
       self.dns = {
         provider: cloud[:provider]
@@ -33,22 +32,22 @@ class Manifest < ApplicationRecord
       
       case cloud[:provider]
       when "digitalocean"
-        compute[:server][:region] = "sfo1"
-        compute[:server][:image] = "ubuntu-16-04-x64"
+        compute[:region] = "sfo1"
+        compute[:image] = "ubuntu-16-04-x64"
         case platform[:provider]
         when "dokku"
-          compute[:server][:size] = "1gb"
+          compute[:size] = "1gb"
         when "flynn"
-          compute[:server][:size] = "4gb"
+          compute[:size] = "4gb"
         end
       when "aws"
         compute[:region] = "us-west-2"
-        compute[:server][:image_id] = "ami-6e1a0117"
+        compute[:image_id] = "ami-6e1a0117"
         case platform[:provider]
         when "dokku"
-          compute[:server][:flavor_id] = "t2.micro"
+          compute[:flavor_id] = "t2.micro"
         when "flynn"
-          compute[:server][:flavor_id] = "t2.medium"
+          compute[:flavor_id] = "t2.medium"
         end
       end
 
