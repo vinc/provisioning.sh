@@ -39,6 +39,12 @@
       </select>
     </div>
 
+    <div class="form-group">
+      <label for="domain">Platform domain</label>
+      <input id="domain" name="manifest[platform][domain]" type="text" class="form-control" aria-describedby="domain-help" placeholder="example.com" required v-model="domain">
+      <p id="domain-help" class="form-text text-muted" v-cloak>https://{{helps.app}}.<strong>{{helps.domain}}</strong></p>
+    </div>
+
     <hr>
 
     <h3 class="text-center">Hosting</h3>
@@ -131,12 +137,6 @@
         <option value="linode">Linode</option>
         <option value="rackspace">Rackspace</option>
       </select>
-    </div>
-
-    <div class="form-group">
-      <label for="domain">Platform domain</label>
-      <input id="domain" name="manifest[dns][domain]" type="text" class="form-control" aria-describedby="domain-help" placeholder="example.com" required v-model="domain">
-      <p id="domain-help" class="form-text text-muted" v-cloak>https://{{helps.app}}.<strong>{{helps.domain}}</strong></p>
     </div>
 
     <hr>

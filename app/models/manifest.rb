@@ -60,8 +60,8 @@ class Manifest < ApplicationRecord
       platform[:version] = "v0.10.4"
     end
     
-    dns[:domain] ||= app[:domains].first || "example.com" # error if empty?
-    app[:name] ||= dns[:domain].tr(".", "-")
+    platform[:domain] ||= app[:domains].first || "example.com" # error if empty?
+    app[:name] ||= platform[:domain].tr(".", "-")
   end
 
   def providers

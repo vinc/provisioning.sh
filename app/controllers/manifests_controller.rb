@@ -22,12 +22,12 @@ class ManifestsController < ApplicationController
     params.require(:manifest).permit(
       ssh: [:key],
       app: [:name, :domains, services: []],
-      platform: [:provider, :version],
+      platform: [:provider, :domain, :version],
       hosting: [
         :provider, :region,
         server: [:image, :image_id, :flavor_id, :size, :region]
       ],
-      dns: [:provider, :domain],
+      dns: [:provider],
       cloud: [:provider]
     )
   end
