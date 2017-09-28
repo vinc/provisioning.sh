@@ -52,12 +52,12 @@ class Manifest < ApplicationRecord
         end
       end
 
-      case platform[:provider]
-      when "dokku"
-        platform[:version] = "v0.10.4"
-      end
-
       self.cloud = nil
+    end
+
+    case platform[:provider]
+    when "dokku"
+      platform[:version] = "v0.10.4"
     end
     
     dns[:domain] ||= app[:domains].first || "example.com" # error if empty?
