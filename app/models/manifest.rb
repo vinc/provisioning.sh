@@ -37,8 +37,10 @@ class Manifest < ApplicationRecord
         case platform[:provider]
         when "dokku"
           compute[:size] = "1gb"
+          compute[:count] = "1"
         when "flynn"
           compute[:size] = "4gb"
+          compute[:count] = "3"
         end
       when "aws"
         compute[:region] = "us-west-2"
@@ -46,8 +48,10 @@ class Manifest < ApplicationRecord
         case platform[:provider]
         when "dokku"
           compute[:flavor_id] = "t2.micro"
+          compute[:count] = "1"
         when "flynn"
           compute[:flavor_id] = "t2.medium"
+          compute[:count] = "3"
         end
       end
 
