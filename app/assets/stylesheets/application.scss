@@ -51,7 +51,7 @@ footer.credits {
 }
 
 .text-console {
-  color: chartreuse;
+  color: $link-color;
 }
 
 .bg-console {
@@ -60,4 +60,10 @@ footer.credits {
 
 .border-console {
   border-color: rgba(128, 128, 128, 0.5) !important;
+}
+
+.welcome {
+  button {
+    background: rgba($link-color, 0.7);
+  }
 }
